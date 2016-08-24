@@ -37,10 +37,7 @@ def index():
     if request.method == 'GET':
         return render_template('index.html')
 
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 412
-
-    if request.form['submit'] == 'Download':
+    if request.form.get('submit', None) == 'Download':
         url = request.form.get('url', None)
         if not url:
             return jsonify({'error': 'No url provided'}), 412
@@ -50,8 +47,7 @@ def index():
         try:
             downloaded_file = requests.get(url)
         except requests.exceptions.RequestException:
-            flash('cannot download by url')
-            return jsonify({}), 412
+            return jsonify({'error': 'cannot download by url'}), 412
 
         filename = safe_filename(os.path.join(app.config['UPLOAD_FOLDER'],
                                               'default.csv'))
@@ -61,6 +57,9 @@ def index():
         session['filename'] = save_path
 
     else:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file part'}), 412
+
         file = request.files['file']
         if not file.filename:
             return jsonify({'error': 'No selected file'}), 412

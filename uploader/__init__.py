@@ -9,6 +9,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top-secret!'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+app.config['TRAP_HTTP_EXCEPTIONS'] = True
+app.config['TRAP_BAD_REQUEST_ERRORS'] = True
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 db = SQLAlchemy(app)
 
