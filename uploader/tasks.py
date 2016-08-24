@@ -10,10 +10,10 @@ def load_data(file_name):
 
 
 @celery.task(bind=True, name='parse_csv')
-def parse_csv(self, file_name=''):
+def parse_csv(self, filename=''):
     """Background task that parses CSV file"""
     try:
-        data = load_data(file_name)
+        data = load_data(filename)
     except IOError:
         return {'current': 0, 'total': 100, 'status': 'Cannot read file',
                 'result': 42}

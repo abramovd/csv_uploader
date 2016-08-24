@@ -1,9 +1,7 @@
-
 from flask import Flask
 from celery import Celery
 from flask.ext.sqlalchemy import SQLAlchemy
 from config import UPLOAD_FOLDER, SQLALCHEMY_DATABASE_URI
-
 
 ALLOWED_EXTENSIONS = {'jpg', 'csv'}
 
@@ -20,7 +18,9 @@ app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
 
 
 # Initialize Celery
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], include=['uploader.tasks'])
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'],
+                include=['uploader.tasks'])
 celery.conf.update(app.config)
 
-import views, models
+import views
+import models

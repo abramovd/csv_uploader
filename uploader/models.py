@@ -3,7 +3,7 @@ from uploader import db
 
 
 class CategoryLine(db.Model):
-    __tablename__ = 'categori'
+    __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer)
